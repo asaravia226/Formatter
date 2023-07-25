@@ -66,7 +66,7 @@ class Formatter
         std::vector<Report> report;
         
         // This list does not include any duplicates. 
-        std::vector<newReport> newReport;
+        std::vector<newReport> nr;
 
         // This vector will contain the source list, which mirrors the program's desired output. 
         std::vector<Source> source_list; 
@@ -133,11 +133,11 @@ void::Formatter::push_file() {
 
 void::Formatter::newList() {
     // create a copy of report
-    std::copy(report.begin(), report.end(), back_inserter(newReport));
+    // std::copy(report.begin(), report.end(), back_inserter(nr));
     
     // Erase Duplicates
-    std::sort(newReport.begin(), newReport.end()); 
-    newReport.erase(unique(newReport.begin(), newReport.end()), newReport.end()); 
+    // std::sort(newReport.begin(), newReport.end()); 
+    // newReport.erase(unique(newReport.begin(), newReport.end()), newReport.end()); 
 }
 
 void::Formatter::date_parser() {
@@ -174,10 +174,10 @@ void::Formatter::user_prompt() {
 
 void::Formatter::vol_total() {
     // Count all repeats in list. 
-    for (int i = 0; i < newReport.size(); i++) {
+    for (int i = 0; i < nr.size(); i++) {
         for (int j = 0; j < report.size(); j++) {
-            if (newReport[i].name == report[j].name) {
-                newReport[i].total_vol = newReport[i].total_vol + report[j].amt;
+            if (nr[i].name == report[j].name) {
+                nr[i].total_vol = nr[i].total_vol + report[j].amt;
             } 
         }
     }
@@ -185,10 +185,10 @@ void::Formatter::vol_total() {
 
 void::Formatter::req_total() {
     // Count all repeats in list. 
-    for (int i = 0; i < newReport.size(); i++) {
+    for (int i = 0; i < nr.size(); i++) {
         for (int j = 0; j < report.size(); j++) {
-            if (newReport[i].name == report[j].name) {
-                newReport[i].count++;
+            if (nr[i].name == report[j].name) {
+                nr[i].count++;
                 continue;  
             }
         }
