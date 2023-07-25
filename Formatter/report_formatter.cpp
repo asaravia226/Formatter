@@ -15,6 +15,7 @@
 class Formatter 
 {
     public:
+        std::ifstream fileStream;
         std::string month; 
         std::string user_file = "request_report_20230501_20230731.csv"; 
 
@@ -24,13 +25,28 @@ class Formatter
             // valid dates for the target month. 
             std::string date;
             std::string name; 
-            int count;
+            // int count;
             float amt;
-            float total_vol;   
+            // float total_vol;   
 
         };
+
+        struct newReport {
+            std::string name; 
+            float count;
+            float total_vol;  
+        };
+
+        struct Source {
+            std::string item; 
+            int count; 
+        };
+
         // Creates the data structure necessary to perform search/ summations on. 
         void push_file();
+
+        // This function reads a text file and inserts each line into a vector. 
+        void push_source();
         
         void date_parser(); 
 
@@ -45,19 +61,37 @@ class Formatter
         void print();
         
         void newList();
-
-
         
-        std::ifstream fileStream;
+        // This vector contains structs that have taken in original data from our csv. 
         std::vector<Report> report;
+        
         // This list does not include any duplicates. 
-        std::vector<Report> newReport;   
-       
+        std::vector<newReport> newReport;
+
+        // This vector will contain the source list, which mirrors the program's desired output. 
+        std::vector<Source> source_list; 
+
+
         // sorts the report data
         std::vector<Report> setReport(std::vector<Report> r, std::string a, float b, std::string c); 
 
+        std::vector<newReport> setNewReport(std::vector<newReport> nr, std::string a); 
+
 };
 
+void::Formatter::push_source() {
+    fileStream.open("teams_buffer_list.txt", std::ifstream::in); 
+    std::string line, buf; 
+
+    while (std::getline(fileStream, line)) {
+        std::stringstream ss(line); 
+        std::getline(ss, buf, '\n'); 
+    }
+
+    // newReport = setNewReport()
+
+
+}
 void::Formatter::push_file() {
     fileStream.open(user_file, std::ifstream::in);
 
@@ -168,6 +202,10 @@ std::vector<Formatter::Report> Formatter::setReport(std::vector<Report> r, std::
     myReport.date = c; 
     r.push_back(myReport); 
     return r; 
+}
+
+std::vector<newReport> setNewReport(std::vector<newReport> nr, std::string a) {
+    newReport newrep; 
 }
 
 void::Formatter::print() {
